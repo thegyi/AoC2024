@@ -8,21 +8,6 @@
 #include <string>
 #include <vector>
 
-class Interval {
-public:
-  int start;
-  int end;
-  Interval(int start, int end) : start(start), end(end) {}
-  bool contains(Interval other) const {
-    return contains(other.start) && contains(other.end);
-  };
-  bool contains(int x) const { return x >= start && x <= end; }
-
-  bool overlaps(Interval other) const {
-    return contains(other.start) || contains(other.end) ||
-           other.contains(start) || other.contains(end);
-  }
-};
 
 std::vector<std::string> split(std::string str, std::string delimiter) {
   size_t pos = 0;
@@ -37,17 +22,6 @@ std::vector<std::string> split(std::string str, std::string delimiter) {
   return result;
 };
 
-bool unique_string(std::string s) {
-  std::map<char, int> freq;
-  for (unsigned int i = 0; i < s.size(); i++) {
-    if (freq.contains(s[i])) {
-      freq[s[i]] = 1;
-    } else {
-      return false;
-    }
-  }
-  return true;
-}
 
 int main() {
   std::ifstream in("1.txt");
