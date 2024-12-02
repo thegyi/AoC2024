@@ -9,6 +9,15 @@
 #include <string>
 #include <vector>
 
+/**
+ * Splits a given string into a vector of substrings based on the specified
+ * delimiter.
+ *
+ * @param str The input string to be split.
+ * @param delimiter The delimiter string used to divide the input string.
+ * @return A vector containing the substrings obtained by splitting the input
+ * string.
+ */
 std::vector<std::string> split(std::string str, std::string delimiter) {
   size_t pos = 0;
   std::string token;
@@ -22,6 +31,12 @@ std::vector<std::string> split(std::string str, std::string delimiter) {
   return result;
 };
 
+/**
+ * Checks whether a given vector of strings is sorted in increasing order.
+ *
+ * @param v A vector of strings representing the sequence to be checked.
+ * @return True if the sequence is in increasing order, false otherwise.
+ */
 bool isIncreasing(std::vector<std::string> v) {
   for (unsigned int i = 1; i < v.size(); i++) {
     if (std::stoi(v[i]) <= std::stoi(v[i - 1])) {
@@ -31,6 +46,12 @@ bool isIncreasing(std::vector<std::string> v) {
   return true;
 }
 
+/**
+ * Checks whether a given vector of strings is sorted in decreasing order.
+ *
+ * @param v A vector of strings representing the sequence to be checked.
+ * @return True if the sequence is in decreasing order, false otherwise.
+ */
 bool isDecreasing(std::vector<std::string> v) {
   for (unsigned int i = 1; i < v.size(); i++) {
     if (std::stoi(v[i]) >= std::stoi(v[i - 1])) {
@@ -40,6 +61,14 @@ bool isDecreasing(std::vector<std::string> v) {
   return true;
 }
 
+/**
+ * Checks whether a given sequence of strings is safe, meaning that it is either
+ * in strictly increasing or strictly decreasing order, and that the absolute
+ * difference between consecutive elements is between 1 and 3, inclusive.
+ *
+ * @param s A vector of strings representing the sequence to be checked.
+ * @return True if the sequence is safe, false otherwise.
+ */
 bool isSafe(std::vector<std::string> s) {
   for (unsigned int i = 1; i < s.size(); i++) {
     int tmp = std::stoi(s[i]);
