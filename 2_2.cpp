@@ -92,7 +92,7 @@ bool isSafe(std::vector<std::string> &s) {
   return true;
 }
 int main() {
-  std::ifstream in("input.txt");
+  std::ifstream in("2.txt");
   std::string line;
   int countOfSafeReports = 0;
   while (std::getline(in, line)) {
