@@ -52,10 +52,10 @@ std::vector<int> splitAsInt(std::string str, const std::string delimiter) {
   return result;
 };
 
-void createSigns(std::vector<std::vector<char>> &signs, int n) {
+void createOperators(std::vector<std::vector<char>> &signs, int n) {
   std::vector<std::vector<char>> ret;
   if (signs.empty()) {
-    signs.push_back(std::vector<char>());
+    signs.emplace_back();
   }
   if (n > 0) {
     std::vector<std::vector<char>> res;
@@ -66,7 +66,7 @@ void createSigns(std::vector<std::vector<char>> &signs, int n) {
       res.push_back(s);
     }
     signs = std::vector<std::vector<char>>(res.begin(), res.end());
-    createSigns(signs, n - 1);
+    createOperators(signs, n - 1);
   }
 }
 
@@ -78,20 +78,26 @@ int main() {
   while (std::getline(in, line)) {
     lines.push_back(line);
     auto numbers = split(line, ":");
-    unsigned long long int result = stoll(numbers[0]);
+    unsigned long long int expectedResult = stoll(numbers[0]);
     auto operands = split(numbers[1], " ");
     operands.erase(operands.begin());
     std::vector<std::vector<char>> signs;
-    signs.emplace_back(std::vector<char>());
-    createSigns(signs, operands.size() - 1);
+    signs.emplace_back();
+    createOperators(signs, operands.size() - 1);
     for (auto s : signs) {
-      unsigned long long int res = std::stoi(operands[0]);
+      unsigned long long int calculatedResult = std::stoi(operands[0]);
       for (int i = 0; i < s.size(); i++) {
-        res = s[i] == '+' ? res + std::stoll(operands[i + 1])
-                          : res * std::stoll(operands[i + 1]);
+        switch (s[i]) {
+        case '+':
+          calculatedResult += std::stoll(operands[i + 1]);
+          break;
+        case '*':
+          calculatedResult *= std::stoll(operands[i + 1]);
+          break;
+        }
       }
-      if (result == res) {
-        sum += res;
+      if (expectedResult == calculatedResult) {
+        sum += calculatedResult;
         break;
       }
     }
