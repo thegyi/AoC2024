@@ -52,35 +52,6 @@ std::vector<int> splitAsInt(std::string str, const std::string delimiter) {
   return result;
 };
 
-void createOperators(std::vector<std::vector<char>> &signs, unsigned int n) {
-  std::vector<std::vector<char>> ret;
-  if (signs.empty()) {
-    signs.emplace_back();
-  }
-  if (n > 0) {
-    size_t originalSize = signs.size();
-    signs.reserve(signs.size() * 3);
-
-    for (size_t i = 0; i < originalSize; ++i) {
-      std::vector<char> current = std::move(signs[i]);
-
-      // Generate new combinations
-      signs[i] = current; // Reuse the current slot
-      signs[i].push_back('+');
-
-      auto starVariant = current;
-      starVariant.push_back('*');
-      signs.push_back(std::move(starVariant));
-
-      auto pipeVariant = current;
-      pipeVariant.push_back('|');
-      signs.push_back(std::move(pipeVariant));
-    }
-
-    createOperators(signs, n - 1); // Recursive call
-  }
-}
-
 struct position {
   int x;
   int y;
