@@ -118,8 +118,8 @@ int main() {
   while (std::getline(in, line)) {
     lines.push_back(line);
   }
-  std::map<char, std::vector<position>> antennas;
 
+  std::map<char, std::vector<position>> antennas;
   for (int i = 0; i < lines.size(); i++) {
     for (int j = 0; j < lines[i].size(); j++) {
       if (std::isdigit(lines[i][j]) || std::isalpha(lines[i][j])) {
@@ -127,26 +127,27 @@ int main() {
       }
     }
   }
-  std::set<position> seen;
-  for (auto &antenna : antennas) {
-    for (int i = 0; i < antenna.second.size(); i++) {
-      for (int j = i + 1; j < antenna.second.size(); j++) {
-        auto p1 = antenna.second[j] - antenna.second[i];
-        position antinode1 = antenna.second[i] - p1;
-        seen.emplace(antenna.second[j]);
-        seen.emplace(antenna.second[i]);
+
+  std::set<position> uniquePositions;
+  for (const auto &[antennaCode, antennaPositions] : antennas) {
+    for (int i = 0; i < antennaPositions.size(); i++) {
+      for (int j = i + 1; j < antennaPositions.size(); j++) {
+        auto distance = antennaPositions[j] - antennaPositions[i];
+        position antinode1 = antennaPositions[i] - distance;
+        uniquePositions.emplace(antennaPositions[j]);
+        uniquePositions.emplace(antennaPositions[i]);
         while (antinode1.isValid(lines.size(), lines[0].size())) {
-          seen.emplace(antinode1);
-          antinode1 = antinode1 - p1;
+          uniquePositions.emplace(antinode1);
+          antinode1 = antinode1 - distance;
         }
-        position antinode2 = antenna.second[j] + p1;
+        position antinode2 = antennaPositions[j] + distance;
         while (antinode2.isValid(lines.size(), lines[0].size())) {
-          seen.emplace(antinode2);
-          antinode2 = antinode2 + p1;
+          uniquePositions.emplace(antinode2);
+          antinode2 = antinode2 + distance;
         }
       }
     }
   }
-  std::cout << seen.size() << std::endl;
+  std::cout << uniquePositions.size() << std::endl;
   return 0;
 }
