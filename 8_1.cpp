@@ -127,22 +127,22 @@ int main() {
       }
     }
   }
-  std::set<position> seen;
-  for (auto &antenna : antennas) {
-    for (int i = 0; i < antenna.second.size(); i++) {
-      for (int j = i + 1; j < antenna.second.size(); j++) {
-        auto p1 = antenna.second[j] - antenna.second[i];
-        position antinode1 = antenna.second[i] - p1;
-        position antinode2 = antenna.second[j] + p1;
+  std::set<position> uniquePositions;
+  for (const auto &[antennaCode, antennaPositions] : antennas) {
+    for (int i = 0; i < antennaPositions.size(); i++) {
+      for (int j = i + 1; j < antennaPositions.size(); j++) {
+        auto p1 = antennaPositions[j] - antennaPositions[i];
+        position antinode1 = antennaPositions[i] - p1;
+        position antinode2 = antennaPositions[j] + p1;
         if (antinode1.isValid(lines.size(), lines[0].size())) {
-          seen.emplace(antinode1);
+          uniquePositions.emplace(antinode1);
         }
         if (antinode2.isValid(lines.size(), lines[0].size())) {
-          seen.emplace(antinode2);
+          uniquePositions.emplace(antinode2);
         }
       }
     }
   }
-  std::cout << seen.size() << std::endl;
+  std::cout << uniquePositions.size() << std::endl;
   return 0;
 }
