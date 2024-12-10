@@ -131,7 +131,7 @@ int trailheadCount(Node *head) {
 }
 
 int main() {
-  std::ifstream in("input.txt");
+  std::ifstream in("10.txt");
   std::string line;
   std::vector<std::string> lines;
   unsigned long long trailheadScore = 0;
